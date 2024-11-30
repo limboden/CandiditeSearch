@@ -7,6 +7,7 @@ const CandidateSearch = () => {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentCandidate, setCurrentCandidate] = useState<Candidate | null>(null)
+  const [savedCandidates, setsavedCandidates] = useState<Candidate[]>([])
 
   const fetchCandidates = async () => {
     try {
@@ -20,6 +21,7 @@ const CandidateSearch = () => {
 
 
   // Skip candidates without a valid name, username, and profile URL
+  // we will also call this when a candidate is rejected !!!
   const handleNextArrayItem = () => {
     const nextArrayItem = candidates[currentIndex];
     if (nextArrayItem && nextArrayItem.login && nextArrayItem.html_url) {
@@ -34,11 +36,19 @@ const CandidateSearch = () => {
     }
   };
 
+  //what happens when someone saves a candidate
+  const handleSave = () => {
+    const newSavedCandidatesArray = [...savedCandidates, currentCandidate]
+    setsavedCandidates(newSavedCandidatesArray)
+    localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates))
+    handleNextArrayItem() //THIS AT THE END
+  }
+
 
   useEffect(() => {
-    const saved = localStorage.getItem('savedCandidates');
+    const saved = JSON.parse(localStorage.getItem('savedCandidates'));
     if (saved) {
-      //retrieve saved candidates
+      setsavedCandidates(saved)
     }
   }, []);
 
