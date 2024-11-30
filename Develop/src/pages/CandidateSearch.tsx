@@ -4,20 +4,16 @@ import { searchGithub, searchGithubUser } from '../api/API';
 const CandidateSearch = () => {
 
   const [users, setUsers] = useState([]);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
 
-  const searchGitHubUsers = async (query: string) => {
-    const response = await fetch(`https://api.github.com/search/users?q=${query}`, {
-      headers: {
-        Authorization: `token ${process.env.VITE_GITHUB_TOKEN}`
-      }
-    });
 
-    if (!response.ok) {
-      throw new Error('response was not ok');
+  const fetchCandidates = async () => {
+    try {
+      const data = await searchGithub();
+      setCandidates(data);
+    } catch (err) {
+      console.log('Failed to fetch candidates');
     }
-
-    const data = await response.json();
-    return data.items; // returns a list of users
   };
 
   const handleSearch = async () => {
