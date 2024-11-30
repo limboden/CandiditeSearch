@@ -20,13 +20,20 @@ const CandidateSearch = () => {
     }
   };
 
+  useEffect(() => {
+    fetchCandidates();
+  }, []);
+
 
   // Skip candidates without a valid name, username, and profile URL
   // we will also call this when a candidate is rejected !!!
-  const handleNextArrayItem = () => {
+  const handleNextArrayItem = async () => {
     const nextArrayItem = candidates[currentIndex];
-    if (nextArrayItem && nextArrayItem.login && nextArrayItem.html_url) {
-      setCurrentCandidate(nextArrayItem)
+
+    const detailedItem = await searchGithubUser(nextArrayItem.login);
+
+    if (detailedItem && detailedItem.login && detailedItem.html_url) {
+      setCurrentCandidate(detailedItem)
     } else {
       setCurrentIndex(currentIndex + 1)
       if (currentIndex >= candidates.length) {
