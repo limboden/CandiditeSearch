@@ -41,14 +41,14 @@ const CandidateSearch = () => {
     const newSavedCandidatesArray = [...savedCandidates, currentCandidate]
     setsavedCandidates(newSavedCandidatesArray)
     localStorage.setItem('savedCandidates', JSON.stringify(savedCandidates))
-    handleNextArrayItem() //THIS AT THE END
+    handleNextArrayItem();
   }
 
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('savedCandidates'));
+    const saved = localStorage.getItem('savedCandidates');
     if (saved) {
-      setsavedCandidates(saved)
+      setsavedCandidates(JSON.parse(saved))
     }
   }, []);
 
