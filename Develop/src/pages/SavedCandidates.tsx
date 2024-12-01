@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Candidate from '../interfaces/Candidate.interface';
-
-
-
-
 
 const SavedCandidates = () => {
 
@@ -22,12 +18,9 @@ const SavedCandidates = () => {
     localStorage.setItem('savedCandidates', JSON.stringify(newCandidates));
   };
 
-
-
   return (
     <div className="saved-candidates-container container">
       <h1>Potential Candidates</h1>
-      {/* Conditional rendering for "No candidates" message */}
       {savedCandidates.length === 0 ? (
         <p className="text-center mt-4">No candidates have been accepted yet!</p>
       ) : (
