@@ -59,9 +59,6 @@ const CandidateSearch = () => {
     }
   }, []);
 
-
-
-
   return (
     <div className="candidate-search-container container-fluid">
       <h1 className='page-titles'>Candidate Search</h1>
